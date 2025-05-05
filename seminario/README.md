@@ -24,8 +24,11 @@ Ele foi projetado para oferecer “Java supersônico e subatômico”, com tempo
 
 ## Características Principais:
 
-O Quarkus foca em tempo de startup rápido e baixo consumo de memória, obtidos tanto no HotSpot quanto – especialmente – em imagens nativas GraalVM. 
-Ele recursos nativos para geração automática de manifestos Kubernetes e containers.
+O Quarkus foca em tempo de startup rápido e baixo consumo de memória, obtidos tanto no HotSpot quanto – especialmente – em imagens nativas GraalVM.
+
+Ele oferece compatibilidade com Java EE/Jakarta EE e MicroProfile para que projetos existentes migrem facilmente, e tem suporte integrado a várias extensões (RESTEasy, Hibernate, SmallRye OpenAPI/Swagger, JAX-RS, etc.).
+
+Além disso, recursos nativos para geração automática de manifestos Kubernetes e containers.
 
 ## Servidores Web
 
