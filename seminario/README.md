@@ -8,7 +8,7 @@ Ele foi projetado para oferecer “Java supersônico e subatômico”, com tempo
 
 1. Tempo de boot extremamente rápido (graças à compilação antecipada para binário nativo com GraalVM e o footprint de memória reduzido). Ideal para ambientes em nuvem, serverless e elasticidade rápida.
 
-2. Suporta live coding e testing em modo de desenvolvimento, oferecendo um desenvolvimento fluido. 
+2. Suporta live coding e testing em modo de desenvolvimento, oferecendo um trabalho fluido. 
 
 3. Construído sobre padrões consolidados como Eclipse MicroProfile, JAX-RS (RESTEasy), CDI e Hibernate/JPA, além de integrar-se a bibliotecas populares como Apache Kafka, Camel, Spring APIs (via extensões), etc.
 
@@ -25,8 +25,7 @@ Ele foi projetado para oferecer “Java supersônico e subatômico”, com tempo
 ## Características Principais:
 
 O Quarkus foca em tempo de startup rápido e baixo consumo de memória, obtidos tanto no HotSpot quanto – especialmente – em imagens nativas GraalVM. 
-
-Ele oferece Dev Mode com recarregamento automático de código, CLI (via JBang) para geração de projetos e recursos nativos para geração automática de manifestos Kubernetes e containers. O Quarkus traz compatibilidade com Java EE/Jakarta EE e MicroProfile para que projetos existentes migrem facilmente, e tem suporte integrado a várias extensões (RESTEasy, Hibernate, SmallRye OpenAPI/Swagger, JAX-RS, etc.).
+Ele recursos nativos para geração automática de manifestos Kubernetes e containers.
 
 ## Servidores Web
 
@@ -34,12 +33,11 @@ Internamente, o Quarkus usa o Eclipse Vert.x como camada HTTP fundamental e uma 
 
 ## Configuração
 
-Para rodar aplicações Quarkus modernas, requer-se JDK 17 ou superior (Quarkus 3.7 em diante exige Java 17). É comum usar Maven ou Gradle como ferramentas de build; o Quarkus fornece um plugin Maven/Gradle para criar e executar projetos. Opcionalmente, recomenda-se instalar o Quarkus CLI via JBang ou SDKMAN, que facilita geração de projetos e execução em modo dev. As configurações da aplicação (portas, conexão com banco, etc.) ficam em application.properties ou application.yaml.
+Para rodar aplicações Quarkus modernas, utilizamos Maven ou Gradle como ferramentas de build; Opcionalmente, recomenda-se instalar o Quarkus CLI via JBang ou SDKMAN, que facilita geração de projetos e execução em modo dev. As configurações da aplicação (portas, conexão com banco, etc.) ficam em application.properties ou application.yaml.
 
 ## Licença: 
 
 O projeto é mantido majoritariamente pela Red Hat, mas é totalmente open source sob **Apache License 2.0**. A governança está migrando para uma fundação para reforçar a participação de outros fornecedores.
-
 
 ## Conclusões: 
 
@@ -66,7 +64,7 @@ Utilize o Quarkus Maven Plugin (ou CLI) para gerar o esqueleto do projeto. Por e
 mvn io.quarkus:quarkus-maven-plugin:3.7.0:create \
     -DprojectGroupId=com.github.andreytondo \
     -DprojectArtifactId=quarkus-crud \
-    -Dextensions="resteasy,hibernate-orm,hibernate-validator,jdbc-postgresql,smallrye-openapi, rest-jackson, hibernate-orm-panache"
+    -Dextensions="hibernate-orm,hibernate-validator,jdbc-postgresql,smallrye-openapi, rest-jackson, hibernate-orm-panache"
 ```
 
 Após isso, entre na pasta do projeto:
@@ -76,3 +74,22 @@ cd quarkus-crud
 ```
 
 ## Configurando o projeto
+
+No arquivo `src/main/resources/application.properties`, adicione as seguintes configurações:
+
+```properties
+# Configurações do banco de dados
+quarkus.datasource.db-kind=postgresql
+quarkus.datasource.username=postgres
+quarkus.datasource.password=postgres
+quarkus.datasource.jdbc.url=jdbc:postgresql://localhost:5432/quarkus_crud
+quarkus.hibernate-orm.database.generation=update
+```
+
+## Executando o projeto
+
+Para executar o projeto, utilize o seguinte comando:
+
+```bash
+mvn clean quarkus:dev
+```
