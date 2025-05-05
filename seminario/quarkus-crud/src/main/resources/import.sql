@@ -14,7 +14,9 @@ create table if not exists pessoa (
     estado varchar(2)
 );
 
-insert into pessoa (id, nome, cpf, telefone, rua, numero, complemento, bairro, cep, cidade, estado) values
-(1, 'João da Silva', '12345678901', '11987654321', 'Rua A', '123', 'Apto 1', 'Centro', '12345678', 'São Paulo', 'SP'),
-(2, 'Maria Oliveira', '23456789012', '11976543210', 'Rua B', '456', '', 'Jardim', '23456789', 'Rio de Janeiro', 'RJ'),
-(3, 'Carlos Pereira', '34567890123', '11965432109', 'Rua C', '789', '', 'Vila Nova', '34567890', 'Belo Horizonte', 'MG');
+insert into pessoa (nome, cpf, telefone, rua, numero, complemento, bairro, cep, cidade, estado) values
+('João da Silva', '12345678901', '11987654321', 'Rua A', '123', 'Apto 1', 'Centro', '12345678', 'São Paulo', 'SP'),
+('Maria Oliveira', '23456789012', '11976543210', 'Rua B', '456', '', 'Jardim', '23456789', 'Rio de Janeiro', 'RJ'),
+('Carlos Pereira', '34567890123', '11965432109', 'Rua C', '789', '', 'Vila Nova', '34567890', 'Belo Horizonte', 'MG');
+
+SELECT setval(pg_get_serial_sequence('pessoa', 'id'), (SELECT MAX(id) FROM pessoa));
