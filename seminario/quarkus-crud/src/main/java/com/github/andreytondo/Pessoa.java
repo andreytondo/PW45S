@@ -18,4 +18,8 @@ public class Pessoa extends PanacheEntity {
     public String cep;
     public String cidade;
     public String estado;
+
+    public Long getId() {
+        return this.id;
+    }
 }
