@@ -1,11 +1,7 @@
 package com.github.andreytondo;
 
 import jakarta.inject.Inject;
-import jakarta.ws.rs.GET;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.PathParam;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
+import jakarta.ws.rs.*;
 
 @Path("pessoa")
 public class PessoaResource {
@@ -15,8 +11,24 @@ public class PessoaResource {
 
     @GET
     @Path("{id}")
-    @Produces(MediaType.TEXT_PLAIN)
     public Pessoa findById(@PathParam("id") Long id) {
         return service.findById(id);
+    }
+
+    @POST
+    public void create(Pessoa pessoa) {
+        service.create(pessoa);
+    }
+
+    @PUT
+    @Path("{id}")
+    public void update(@PathParam("id") Long id, Pessoa pessoa) {
+        service.update(id, pessoa);
+    }
+
+    @DELETE
+    @Path("{id}")
+    public void delete(@PathParam("id") Long id) {
+        service.delete(id);
     }
 }
