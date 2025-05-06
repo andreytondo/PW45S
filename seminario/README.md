@@ -4,7 +4,7 @@ Quarkus é um framework Java moderno e nativo para nuvem, idealizado para arquit
 
 Ele foi projetado para oferecer “Java supersônico e subatômico”, com tempo de inicialização e consumo de memória muito baixos. Criado inicialmente pela Red Hat em 2019 (como projeto comunitário) e lançado oficialmente em 2020, o Quarkus é open source sob **Apache License 2.0**. Atualmente reúne uma comunidade ativa com mais de 900 contribuidores e mais de 700 extensões.
 
-## Vantagens: 
+## Vantagens
 
 1. Tempo de boot extremamente rápido (graças à compilação antecipada para binário nativo com GraalVM e o footprint de memória reduzido). Ideal para ambientes em nuvem, serverless e elasticidade rápida.
 
@@ -22,7 +22,7 @@ Ele foi projetado para oferecer “Java supersônico e subatômico”, com tempo
 
 3. Além disso, o uso avançado de GraalVM e compilação nativa pode implicar em uma curva de aprendizado extra e limitações (nem todas as APIs Java são totalmente compatíveis em modo nativo).
 
-## Características Principais:
+## Características Principais
 
 O Quarkus foca em tempo de startup rápido e baixo consumo de memória, obtidos tanto no HotSpot quanto – especialmente – em imagens nativas GraalVM.
 
@@ -38,11 +38,11 @@ Internamente, o Quarkus usa o Eclipse Vert.x como camada HTTP fundamental e uma 
 
 Para rodar aplicações Quarkus modernas, utilizamos Maven ou Gradle como ferramentas de build; Opcionalmente, recomenda-se instalar o Quarkus CLI via JBang ou SDKMAN, que facilita geração de projetos e execução em modo dev. As configurações da aplicação (portas, conexão com banco, etc.) ficam em application.properties ou application.yaml.
 
-## Licença: 
+## Licença
 
 O projeto é mantido majoritariamente pela Red Hat, mas é totalmente open source sob **Apache License 2.0**. A governança está migrando para uma fundação para reforçar a participação de outros fornecedores.
 
-## Conclusões: 
+## Conclusões
 
 Em resumo, o Quarkus é um framework promissor para aplicações Java modernas e baseadas em microsserviços. Ele simplifica a configuração inicial (geração de projeto via CLI, Dev Mode eficiente) e possui documentação oficial abrangente. A comunidade é ativa, mas ainda menor que a de frameworks veteranos como Spring. 
 
