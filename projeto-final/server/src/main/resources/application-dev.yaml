@@ -11,3 +11,13 @@ spring:
     properties:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
+
+minio:
+  endpoint: http://localhost
+  port: 9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  secure: false
+  bucketName: my-default-bucket
+  imageSize: 5242880       # 5MB (ajuste conforme necessário)
+  fileSize: 104857600      # 100MB (ajuste conforme necessário)
