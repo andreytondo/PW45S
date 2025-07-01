@@ -2,14 +2,12 @@ package br.edu.utfpr.pb.pw45s.projetofinal.model;
 
 import br.edu.utfpr.pb.pw45s.projetofinal.shared.Identifiable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 @Entity @Table(name = "camada")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
+@ToString
 public class Camada implements Identifiable<Long> {
 
     @Id

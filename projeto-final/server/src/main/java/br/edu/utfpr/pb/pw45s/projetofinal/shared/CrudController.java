@@ -26,8 +26,11 @@ public abstract class CrudController<ID extends Serializable, E extends Identifi
 
     @PostMapping
     public ResponseEntity<ID> create(@RequestBody @Valid D dto) {
+        System.out.println("debug: " + dto);
         E entity = toEntity(dto);
         E savedEntity = service.save(entity);
+        System.out.println("savedEntity: " + savedEntity);
+
         return new ResponseEntity<>(savedEntity.getId(), HttpStatus.CREATED);
     }
 

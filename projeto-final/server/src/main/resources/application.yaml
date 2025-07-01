@@ -1,14 +1,13 @@
 server:
-  port: ${PORT:8080}
+  port: 8080
+
 spring:
-  config:
-    name: ${APP_NAME:""}
   application:
-    name: ${APP_NAME:""}
+    name: pw45s
   datasource:
-    url: ${DATABASE_URL}
-    username: ${DATABASE_USERNAME}
-    password: ${DATABASE_PASSWORD}
+    url: jdbc:postgresql://192.168.15.34:5432/pw45s
+    username: postgres
+    password: root
     driver-class-name: org.postgresql.Driver
   jpa:
     hibernate:

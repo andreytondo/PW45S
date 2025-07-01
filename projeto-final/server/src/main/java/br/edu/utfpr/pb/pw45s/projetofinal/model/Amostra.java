@@ -2,16 +2,14 @@ package br.edu.utfpr.pb.pw45s.projetofinal.model;
 
 import br.edu.utfpr.pb.pw45s.projetofinal.shared.Identifiable;
 import jakarta.persistence.*;
-import lombok.AllArgsConstructor;
-import lombok.Getter;
-import lombok.NoArgsConstructor;
-import lombok.Setter;
+import lombok.*;
 
 import java.time.LocalDateTime;
 
 @Entity @Table(name = "amostra")
 @Getter @Setter
 @NoArgsConstructor @AllArgsConstructor
+@ToString
 public class Amostra implements Identifiable<Long> {
 
     @Id
