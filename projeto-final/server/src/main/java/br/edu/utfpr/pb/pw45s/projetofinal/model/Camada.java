@@ -29,4 +29,9 @@ public class Camada implements Identifiable<Long> {
 
     @Column(name = "descricao_camada")
     private Float escoreCamada;
+
+    public Camada(Float comprimentoCm, Float escoreCamada) {
+        this.comprimentoCm = comprimentoCm;
+        this.escoreCamada = escoreCamada;
+    }
 }
