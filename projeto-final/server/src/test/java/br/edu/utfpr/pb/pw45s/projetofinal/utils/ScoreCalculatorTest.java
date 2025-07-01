@@ -13,8 +13,8 @@ class ScoreCalculatorTest {
     void calcular() {
         //(1 x 10)/25 + (3 x 15)/25 = Sq 2.2.
         double resultado = ScoreCalculator.calcular(List.of(
-                new Camada(10F, 1F),
-                new Camada(15F, 3F)
+                new LayerData(10F, 1F),
+                new LayerData(15F, 3F)
         ));
         assertEquals(2.2, resultado, 0.01);
     }
