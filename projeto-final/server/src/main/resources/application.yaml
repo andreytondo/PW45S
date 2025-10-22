@@ -5,7 +5,7 @@ spring:
   application:
     name: pw45s
   datasource:
-    url: jdbc:postgresql://192.168.15.34:5432/pw45s
+    url: jdbc:postgresql://localhost:5432/pw45s
     username: postgres
     password: root
     driver-class-name: org.postgresql.Driver
@@ -13,3 +13,16 @@ spring:
     hibernate:
       ddl-auto: update
     show-sql: false
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+
+minio:
+  endpoint: http://localhost
+  port: 9000
+  accessKey: minioadmin
+  secretKey: minioadmin
+  secure: false
+  bucketName: my-default-bucket
+  imageSize: 5242880       # 5MB (adjust as needed)
+  fileSize: 104857600      # 100MB (adjust as needed)

@@ -1,80 +1,69 @@
-//package br.edu.utfpr.pb.pw45s.projetofinal.security;
-//
-//import br.edu.utfpr.pb.pw45s.projetofinal.model.User;
-//import br.edu.utfpr.pb.pw45s.projetofinal.dto.AuthenticationResponse;
-//import br.edu.utfpr.pb.pw45s.projetofinal.dto.UserResponseDTO;
-//import br.edu.utfpr.pb.pw45s.projetofinal.service.UserService;
-//import com.auth0.jwt.JWT;
-//import com.auth0.jwt.algorithms.Algorithm;
-//import com.fasterxml.jackson.databind.ObjectMapper;
-//import jakarta.servlet.FilterChain;
-//import jakarta.servlet.http.HttpServletRequest;
-//import jakarta.servlet.http.HttpServletResponse;
-//import lombok.NoArgsConstructor;
-//import org.springframework.security.authentication.AuthenticationManager;
-//import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
-//import org.springframework.security.core.Authentication;
-//import org.springframework.security.core.AuthenticationException;
-//import org.springframework.security.web.authentication.AuthenticationSuccessHandler;
-//import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
-//
-//import java.io.IOException;
-//import java.util.Date;
-//
-//
-//@NoArgsConstructor
-//public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
-//
-//    private AuthenticationManager authenticationManager;
-//    private UserService userService;
-//
-//    public JWTAuthenticationFilter(AuthenticationManager authenticationManager,
-//                                   UserService userService) {
-//        this.authenticationManager = authenticationManager;
-//        this.userService = userService;
-//    }
-//
-//    @Override
-//    public Authentication attemptAuthentication(HttpServletRequest request, HttpServletResponse response)
-//            throws AuthenticationException {
-//        try {
-//            User credentials = new User();
-//            User user = new User();
-//            if (request.getInputStream() != null && request.getInputStream().available() > 0) {
-//                credentials = new ObjectMapper().readValue(request.getInputStream(), User.class);
-//                user = (User) userService.loadUserByUsername(credentials.getUsername());
-//            }
-//            return authenticationManager.authenticate(
-//                    new UsernamePasswordAuthenticationToken(
-//                            credentials.getUsername(),
-//                            credentials.getPassword(),
-//                            user.getAuthorities()
-//                    )
-//            );
-//        } catch (IOException e) {
-//            throw new RuntimeException(e);
-//        }
-//    }
-//
-//    @Override
-//    protected void successfulAuthentication(HttpServletRequest request, HttpServletResponse response, FilterChain chain,
-//                                            Authentication authResult)
-//            throws IOException {
-//        User user = (User) userService.loadUserByUsername(authResult.getName());
-//        String token = JWT.create()
-//                .withSubject(authResult.getName())
-//                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
-//                .sign(Algorithm.HMAC512(SecurityConstants.SECRET));
-//
-//        response.setContentType("application/json");
-//        response.getWriter().write(
-//                new ObjectMapper().writeValueAsString(
-//                        new AuthenticationResponse(token, new UserResponseDTO(user)))
-//        );
-//    }
-//
-//    @Override
-//    protected AuthenticationSuccessHandler getSuccessHandler() {
-//        return super.getSuccessHandler();
-//    }
-//}
+package br.edu.utfpr.pb.pw45s.projetofinal.security;
+
+import br.edu.utfpr.pb.pw45s.projetofinal.dto.LoginRequest;
+import br.edu.utfpr.pb.pw45s.projetofinal.dto.UserResponseDTO;
+import br.edu.utfpr.pb.pw45s.projetofinal.model.User;
+import com.auth0.jwt.JWT;
+import com.auth0.jwt.algorithms.Algorithm;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import jakarta.servlet.FilterChain;
+import jakarta.servlet.ServletException;
+import jakarta.servlet.http.HttpServletRequest;
+import jakarta.servlet.http.HttpServletResponse;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.AuthenticationException;
+import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
+
+import java.io.IOException;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.Map;
+
+public class JWTAuthenticationFilter extends UsernamePasswordAuthenticationFilter {
+
+    private final AuthenticationManager authenticationManager;
+
+    public JWTAuthenticationFilter(AuthenticationManager authenticationManager) {
+        this.authenticationManager = authenticationManager;
+        setFilterProcessesUrl("/auth/login");
+    }
+
+    @Override
+    public Authentication attemptAuthentication(HttpServletRequest request,
+                                                HttpServletResponse response) throws AuthenticationException {
+        try {
+            LoginRequest creds = new ObjectMapper().readValue(request.getInputStream(), LoginRequest.class);
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(creds.getUsername(), creds.getPassword());
+            return authenticationManager.authenticate(authToken);
+        } catch (IOException e) {
+            throw new RuntimeException("Falha ao autenticar: " + e.getMessage(), e);
+        }
+    }
+
+    @Override
+    protected void successfulAuthentication(HttpServletRequest request,
+                                            HttpServletResponse response,
+                                            FilterChain chain,
+                                            Authentication authResult)
+            throws IOException, ServletException {
+
+        User userPrincipal = (User) authResult.getPrincipal();
+
+        String token = JWT.create()
+                .withSubject(userPrincipal.getEmail())
+                .withExpiresAt(new Date(System.currentTimeMillis() + SecurityConstants.EXPIRATION_TIME))
+                .sign(Algorithm.HMAC512(SecurityConstants.SECRET.getBytes()));
+
+        Map<String, Object> body = new HashMap<>();
+        body.put("token", token);
+        body.put("user", new UserResponseDTO(userPrincipal));
+
+        response.setContentType("application/json");
+        response.setCharacterEncoding("UTF-8");
+        new ObjectMapper().writeValue(response.getWriter(), body);
+    }
+}
+

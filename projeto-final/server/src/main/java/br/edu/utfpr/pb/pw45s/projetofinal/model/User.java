@@ -7,6 +7,7 @@ import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
 import lombok.*;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -28,6 +29,27 @@ public class User implements UserDetails, Identifiable<Long> {
     @Size(min = 4, max = 50)
     private String username;
 
+    @NotNull(message = "O atributo email não pode ser nulo.")
+    @Column(unique = true)
+    @Size(min = 10)
+    private String email;
+
+    @NotNull(message = "A instituição não pode ser nula.")
+    @Size(min = 2, max = 100, message = "A instituição deve ter entre 2 e 100 caracteres.")
+    private String institution;
+
+    @NotNull(message = "O país não pode ser nulo.")
+    @Size(min = 2, max = 50, message = "O país deve ter entre 2 e 50 caracteres.")
+    private String country;
+
+    @NotNull(message = "O estado não pode ser nulo.")
+    @Size(min = 2, max = 50, message = "O estado deve ter entre 2 e 50 caracteres.")
+    private String state;
+
+    @NotNull(message = "A cidade não pode ser nula.")
+    @Size(min = 2, max = 50, message = "A cidade deve ter entre 2 e 50 caracteres.")
+    private String city;
+
     @NotNull(message = "O atributo password não pode ser nulo.")
     @Size(min = 6)
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$")
@@ -35,6 +57,26 @@ public class User implements UserDetails, Identifiable<Long> {
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
-        return List.of();
+        return List.of(new SimpleGrantedAuthority("ROLE_USER"));
+    }
+
+    @Override
+    public boolean isAccountNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isAccountNonLocked() {
+        return true;
+    }
+
+    @Override
+    public boolean isCredentialsNonExpired() {
+        return true;
+    }
+
+    @Override
+    public boolean isEnabled() {
+        return true;
     }
 }

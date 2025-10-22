@@ -6,8 +6,8 @@ import br.edu.utfpr.pb.pw45s.projetofinal.repository.UserRepository;
 import jakarta.validation.ConstraintValidator;
 import jakarta.validation.ConstraintValidatorContext;
 import org.springframework.beans.factory.annotation.Autowired;
-
 import java.util.Objects;
+import java.util.Optional;
 
 public class UserValidator implements ConstraintValidator<ValidUser, UserDTO> {
 
@@ -19,18 +19,21 @@ public class UserValidator implements ConstraintValidator<ValidUser, UserDTO> {
         return validateUniqueUsername(entity, context);
     }
 
-    boolean validateUniqueUsername(UserDTO entity, ConstraintValidatorContext context) {
-        User user = repository.findByUsername(entity.getUsername());
-        boolean valid = user == null || Objects.equals(user.getId(), entity.getId());
+    private boolean validateUniqueUsername(UserDTO entity, ConstraintValidatorContext context) {
+        Optional<User> optionalUser = repository.findByUsername(entity.getUsername());
 
-        if (!valid) {
+        boolean isValid = optionalUser
+                .map(user -> Objects.equals(user.getId(), entity.getId()))
+                .orElse(true);
+
+        if (!isValid) {
             handleMessage(context, "O nome de usuário informado já está em uso", "username");
         }
 
-        return valid;
+        return isValid;
     }
 
-    public void handleMessage(ConstraintValidatorContext context, String message, String node) {
+    private void handleMessage(ConstraintValidatorContext context, String message, String node) {
         context.buildConstraintViolationWithTemplate(message)
                 .addPropertyNode(node)
                 .addConstraintViolation()

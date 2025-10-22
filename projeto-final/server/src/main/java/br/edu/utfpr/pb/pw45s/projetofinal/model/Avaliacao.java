@@ -1,10 +1,12 @@
 package br.edu.utfpr.pb.pw45s.projetofinal.model;
 
 import br.edu.utfpr.pb.pw45s.projetofinal.shared.Identifiable;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity @Table(name = "avaliacao")
 @Getter @Setter
@@ -43,6 +45,10 @@ public class Avaliacao implements Identifiable<Long> {
 
     @Column(name = "escore_medio_geral")
     private Float escoreMedioGeral;
+
+    @OneToMany(mappedBy = "avaliacao", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Amostra> amostras;
 
     private String avaliador;
     private String informacoes;

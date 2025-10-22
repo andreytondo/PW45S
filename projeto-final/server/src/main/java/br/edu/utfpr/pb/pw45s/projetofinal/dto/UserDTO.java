@@ -1,6 +1,8 @@
 package br.edu.utfpr.pb.pw45s.projetofinal.dto;
 
 import br.edu.utfpr.pb.pw45s.projetofinal.validator.ValidUser;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
 import jakarta.validation.constraints.Pattern;
 import jakarta.validation.constraints.Size;
@@ -17,14 +19,34 @@ public class UserDTO {
 
     private Long id;
 
-    @NotNull(message = "O atributo username não pode ser nulo.")
+    @NotBlank(message = "O atributo username não pode ser nulo.")
     @Size(min = 4, max = 50, message = "O atributo username deve conter no mínimo 4 caracteres.")
     private String username;
 
-    @NotNull(message = "O atributo password não pode ser nulo.")
+    @NotBlank(message = "O atributo email não pode ser nulo.")
+    @Email(message = "O formato do email é inválido.")
+    private String email;
+
+    @NotBlank(message = "O atributo password não pode ser nulo.")
     @Size(min = 6, max = 100, message = "O atributo password deve conter no mínimo 6 caracteres.")
     @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "A senha deve conter pelo menos uma letra minúscula, uma letra maiúscula e um número.")
     private String password;
+
+    @NotNull(message = "A instituição não pode ser nula.")
+    @Size(min = 2, max = 100, message = "A instituição deve ter entre 2 e 100 caracteres.")
+    private String institution;
+
+    @NotNull(message = "O país não pode ser nulo.")
+    @Size(min = 2, max = 50, message = "O país deve ter entre 2 e 50 caracteres.")
+    private String country;
+
+    @NotNull(message = "O estado não pode ser nulo.")
+    @Size(min = 2, max = 50, message = "O estado deve ter entre 2 e 50 caracteres.")
+    private String state;
+
+    @NotNull(message = "A cidade não pode ser nula.")
+    @Size(min = 2, max = 50, message = "A cidade deve ter entre 2 e 50 caracteres.")
+    private String city;
 
     public UserDTO(Long id) {
         this.id = id;

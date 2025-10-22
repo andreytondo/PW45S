@@ -1,6 +1,8 @@
 package br.edu.utfpr.pb.pw45s.projetofinal.model;
 
 import br.edu.utfpr.pb.pw45s.projetofinal.shared.Identifiable;
+import com.fasterxml.jackson.annotation.JsonBackReference;
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -18,6 +20,7 @@ public class Amostra implements Identifiable<Long> {
 
     @ManyToOne
     @JoinColumn(name = "avaliacao_id")
+    @JsonIgnoreProperties("amostras")
     private Avaliacao avaliacao;
 
     @Column(name = "nome_amostra")
@@ -43,6 +46,7 @@ public class Amostra implements Identifiable<Long> {
 
     @Column(name = "ordem_amostra")
     private Integer ordemAmostra;
+
 
     private String localizacao;
 }
