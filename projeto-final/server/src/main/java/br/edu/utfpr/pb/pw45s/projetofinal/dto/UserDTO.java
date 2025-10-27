@@ -17,6 +17,7 @@ import lombok.Setter;
 @NoArgsConstructor
 public class UserDTO {
 
+
     private Long id;
 
     @NotBlank(message = "O atributo username não pode ser nulo.")
@@ -26,11 +27,6 @@ public class UserDTO {
     @NotBlank(message = "O atributo email não pode ser nulo.")
     @Email(message = "O formato do email é inválido.")
     private String email;
-
-    @NotBlank(message = "O atributo password não pode ser nulo.")
-    @Size(min = 6, max = 100, message = "O atributo password deve conter no mínimo 6 caracteres.")
-    @Pattern(regexp = "^(?=.*[a-z])(?=.*[A-Z])(?=.*\\d).*$", message = "A senha deve conter pelo menos uma letra minúscula, uma letra maiúscula e um número.")
-    private String password;
 
     @NotNull(message = "A instituição não pode ser nula.")
     @Size(min = 2, max = 100, message = "A instituição deve ter entre 2 e 100 caracteres.")
@@ -47,6 +43,8 @@ public class UserDTO {
     @NotNull(message = "A cidade não pode ser nula.")
     @Size(min = 2, max = 50, message = "A cidade deve ter entre 2 e 50 caracteres.")
     private String city;
+
+    private boolean isAdmin;
 
     public UserDTO(Long id) {
         this.id = id;

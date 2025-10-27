@@ -21,13 +21,6 @@ public class ConfiguracaoController extends CrudController<Long, Configuracao, C
     public ConfiguracaoController() {
         super(Configuracao.class, ConfiguracaoDTO.class);
     }
-    @GetMapping
-    public List<ConfiguracaoDTO> findAll() {
-        return service.findAll()
-                .stream()
-                .map(this::toDto)
-                .collect(Collectors.toList());
-    }
 
     @Override
     @GetMapping("/{id}")

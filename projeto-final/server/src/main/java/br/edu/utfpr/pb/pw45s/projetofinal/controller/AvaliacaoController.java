@@ -30,11 +30,6 @@ public class AvaliacaoController extends CrudController<Long, Avaliacao, Avaliac
         this.avaliacaoService = avaliacaoService;
     }
 
-    @GetMapping("/all")
-    public List<AvaliacaoDTO> findAll() {
-        return service.findAll().stream().map(this::toDto).collect(Collectors.toList());
-    }
-
     @GetMapping("/{id}/completa")
     public ResponseEntity<Avaliacao> findAvaliacaoCompleta(@PathVariable Long id) {
         return service.findById(id)

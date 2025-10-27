@@ -1,6 +1,5 @@
 package br.edu.utfpr.pb.pw45s.projetofinal.controller;
 
-// Altere a importação aqui!
 import br.edu.utfpr.pb.pw45s.projetofinal.dto.UserSignupDTO;
 import br.edu.utfpr.pb.pw45s.projetofinal.service.AuthService;
 import jakarta.validation.Valid;

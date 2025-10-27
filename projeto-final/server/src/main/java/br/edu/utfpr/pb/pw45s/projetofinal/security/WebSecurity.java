@@ -58,6 +58,7 @@ public class WebSecurity {
                                 "/camada/**",
                                 "/score/**",
                                 "/amostra/**",
+                                "/users/**",
                                 "/configuracao/**"
                         ).permitAll()
                 )

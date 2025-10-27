@@ -5,8 +5,12 @@ import br.edu.utfpr.pb.pw45s.projetofinal.model.User;
 import br.edu.utfpr.pb.pw45s.projetofinal.repository.UserRepository;
 import br.edu.utfpr.pb.pw45s.projetofinal.service.UserService;
 import br.edu.utfpr.pb.pw45s.projetofinal.shared.CrudController;
+import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.web.bind.annotation.*;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @RestController
 @RequestMapping("users")
@@ -18,17 +22,18 @@ public class UserController extends CrudController<Long, User, UserDTO, UserRepo
 
     @Override
     public UserDTO toDto(User entity) {
-        entity.setPassword(null);
+        if (entity != null) {
+            entity.setPassword(null);
+        }
         return super.toDto(entity);
     }
 
     @GetMapping("/me")
     public UserDTO getCurrentUser(@AuthenticationPrincipal User user) {
         if (user == null) {
-            return null; // ou lançar um erro 401
+            return null;
         }
-        user.setPassword(null);
-        return super.toDto(user);
+        return toDto(user);
     }
 
     @PutMapping("/me")
@@ -41,7 +46,7 @@ public class UserController extends CrudController<Long, User, UserDTO, UserRepo
         currentUser.setCity(dto.getCity());
 
         User saved = service.save(currentUser);
-        saved.setPassword(null);
-        return super.toDto(saved);
+        return toDto(saved);
     }
+
 }

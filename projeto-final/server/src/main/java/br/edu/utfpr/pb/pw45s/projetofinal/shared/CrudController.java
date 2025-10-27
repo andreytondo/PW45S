@@ -8,12 +8,14 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.io.Serializable;
+import java.util.List;
+import java.util.stream.Collectors;
 
 /**
  * Abstract class that defines the basic CRUD operations for a controller.
  * @param <ID> ID type
  * @param <E> Entity type
- * @param <D> DTO type
+ * <D> DTO type
  */
 public abstract class CrudController<ID extends Serializable, E extends Identifiable<ID>, D, R  extends CrudRepository<ID, E>, S extends CrudService<ID, E, R>> extends BaseController<ID, E, D> {
 
@@ -47,6 +49,14 @@ public abstract class CrudController<ID extends Serializable, E extends Identifi
         return service.findById(id)
                 .map(entity -> ResponseEntity.ok(toDto(entity)))
                 .orElse(ResponseEntity.notFound().build());
+    }
+
+    @GetMapping
+    public ResponseEntity<List<D>> findAll() {
+        List<D> dtos = service.findAll().stream()
+                .map(this::toDto)
+                .collect(Collectors.toList());
+        return ResponseEntity.ok(dtos);
     }
 
     @DeleteMapping("/{id}")
