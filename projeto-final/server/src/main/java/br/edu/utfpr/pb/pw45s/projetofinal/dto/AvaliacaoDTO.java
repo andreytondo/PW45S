@@ -3,6 +3,7 @@ package br.edu.utfpr.pb.pw45s.projetofinal.dto;
 import lombok.Data;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Data
 public class AvaliacaoDTO {
@@ -19,4 +20,5 @@ public class AvaliacaoDTO {
     private String avaliador;
     private String informacoes;
     private String status;
+    private List<AmostraDTO> amostras;
 }

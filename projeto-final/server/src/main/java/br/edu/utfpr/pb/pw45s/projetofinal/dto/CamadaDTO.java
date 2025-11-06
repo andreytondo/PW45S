@@ -1,11 +1,11 @@
 package br.edu.utfpr.pb.pw45s.projetofinal.dto;
 
 import lombok.Data;
+import java.io.Serializable;
 
 @Data
-public class CamadaDTO {
+public class CamadaDTO implements Serializable {
     private Long id;
-    private AmostraDTO amostra;
     private Integer numeroCamada;
     private Float comprimentoCm;
     private Integer notaCamada;

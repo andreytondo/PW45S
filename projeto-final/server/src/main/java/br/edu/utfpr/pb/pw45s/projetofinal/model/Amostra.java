@@ -3,10 +3,12 @@ package br.edu.utfpr.pb.pw45s.projetofinal.model;
 import br.edu.utfpr.pb.pw45s.projetofinal.shared.Identifiable;
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.fasterxml.jackson.annotation.JsonManagedReference;
 import jakarta.persistence.*;
 import lombok.*;
 
 import java.time.LocalDateTime;
+import java.util.List;
 
 @Entity @Table(name = "amostra")
 @Getter @Setter
@@ -21,6 +23,7 @@ public class Amostra implements Identifiable<Long> {
     @ManyToOne
     @JoinColumn(name = "avaliacao_id")
     @JsonIgnoreProperties("amostras")
+    @ToString.Exclude
     private Avaliacao avaliacao;
 
     @Column(name = "nome_amostra")
@@ -49,4 +52,8 @@ public class Amostra implements Identifiable<Long> {
 
 
     private String localizacao;
+
+    @OneToMany(mappedBy = "amostra", cascade = CascadeType.ALL, fetch = FetchType.LAZY)
+    @JsonManagedReference
+    private List<Camada> camadas;
 }

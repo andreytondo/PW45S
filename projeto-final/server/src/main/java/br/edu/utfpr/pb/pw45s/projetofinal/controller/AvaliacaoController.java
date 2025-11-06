@@ -7,11 +7,10 @@ import br.edu.utfpr.pb.pw45s.projetofinal.repository.AvaliacaoRepository;
 import br.edu.utfpr.pb.pw45s.projetofinal.service.AmostraService;
 import br.edu.utfpr.pb.pw45s.projetofinal.service.AvaliacaoService;
 import br.edu.utfpr.pb.pw45s.projetofinal.shared.CrudController;
+import jakarta.validation.Valid;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -40,5 +39,25 @@ public class AvaliacaoController extends CrudController<Long, Avaliacao, Avaliac
                 .orElse(ResponseEntity.notFound().build());
     }
 
+    @Override
+    @PostMapping
+    public ResponseEntity<Long> create(@RequestBody @Valid AvaliacaoDTO dto) {
+        Avaliacao entity = toEntity(dto);
 
+        if (entity.getAmostras() != null) {
+            entity.getAmostras().forEach(amostra -> {
+                amostra.setAvaliacao(entity);
+
+                if (amostra.getCamadas() != null) {
+                    amostra.getCamadas().forEach(camada -> {
+                        camada.setAmostra(amostra);
+                    });
+                }
+            });
+        }
+
+        Avaliacao savedEntity = service.save(entity);
+
+        return new ResponseEntity<>(savedEntity.getId(), HttpStatus.CREATED);
+    }
 }

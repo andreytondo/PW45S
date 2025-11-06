@@ -1,6 +1,7 @@
 package br.edu.utfpr.pb.pw45s.projetofinal.model;
 
 import br.edu.utfpr.pb.pw45s.projetofinal.shared.Identifiable;
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import jakarta.persistence.*;
 import lombok.*;
 
@@ -16,6 +17,8 @@ public class Camada implements Identifiable<Long> {
 
     @ManyToOne
     @JoinColumn(name = "amostra_id")
+    @JsonBackReference
+    @ToString.Exclude
     private Amostra amostra;
 
     @Column(name = "numero_camada")
@@ -27,11 +30,7 @@ public class Camada implements Identifiable<Long> {
     @Column(name = "nota_camada")
     private Integer notaCamada;
 
-    @Column(name = "descricao_camada")
+    @Column(name = "escore_camada")
     private Float escoreCamada;
 
-    public Camada(Float comprimentoCm, Float escoreCamada) {
-        this.comprimentoCm = comprimentoCm;
-        this.escoreCamada = escoreCamada;
-    }
 }
